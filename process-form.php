@@ -41,6 +41,9 @@ if($_FILES["image"]["error"] !== UPLOAD_ERR_OK){
         exit("File exceeds upload_max_filesize in php.ini");
         break;
 
+        case UPLOAD_ERR_NO_TMP_DIR;
+        exit("Temporary folder not found");
+        break;
         default;
         exit("Unkwown upload error");
         break;
@@ -51,10 +54,29 @@ if($_FILES["image"]["size"] > 5098576)
     exit("File is too large(Max 5MB)");
 }
 
+$finfo = new finfo(FILEINFO_MIME_TYPE);
+$mime_type = $finfo->file($_FILES["image"]["tmp_name"]);
+
+// exit($mime_type);
 $mime_types = ["image/gif", "image/jfif", "image/pdf", "image/png", "image/jpeg", "image/txt", "image/docx", "image/doc", "image/xls"];
 
 if( ! in_array($_FILES["image"]["type"], $mime_types)){
     exit("File type is not supported");
+}
+
+$pathinfo = pathinfo($_FILES["image"]["tmp_name"]);
+$base = $pathinfo["filename"];
+$base = preg_replace("/[^\w-]/", "_", $base);
+
+
+
+$filename = $base . "." . $pathinfo["extension"];
+
+$destination = __DIR__ . "/uploads/" . $filename;
+
+if ( ! move_uploaded_file($_FILES["image"]["tmp_name"], $destination))
+{
+exit ("Can not move Uploaded file");
 }
 print_r($_FILES);
 
