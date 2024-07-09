@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
     <h1>File Uploads</h1>
     <form action="process-form.php" method="post" enctype="multipart/form-data">
 
-        <!-- <input type="hidden" name="MAX_FILE_SIZE" value="10 048576"> -->
+        <input type="hidden" name="MAX_FILE_SIZE" value="5098576">
 
         <label for="image">Image File</label>
         <input type="file" id="image" name="image">
@@ -20,6 +21,9 @@
         <button>Upload</button>
 
     </form>
+
+
+
     
 </body>
 </html>
