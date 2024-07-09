@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/image.jpg">
+    <title>PHP File Upload</title>
+</head>
+<body>
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] !=="POST")
 { 
@@ -40,7 +50,23 @@ if($_FILES["image"]["size"] > 5098576)
 {
     exit("File is too large(Max 5MB)");
 }
+
+$mime_types = ["image/gif", "image/jfif", "image/pdf", "image/png", "image/jpeg", "image/txt", "image/docx", "image/doc", "image/xls"];
+
+if( ! in_array($_FILES["image"]["type"], $mime_types)){
+    exit("File type is not supported");
+}
 print_r($_FILES);
 
 
 ?>
+
+</body>
+</html>
+
+
+
+
+
+
+
